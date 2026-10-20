@@ -1,12 +1,12 @@
 {
   "backToHomePage": "Back to Home Page",
   "reportProblem": "Report a problem",
-  "errorPageHeading": "Ouch! :|",
+  "errorPageHeading": "Something went wrong",
   "genericError": "Sorry, something went wrong.",
   "genericErrorSubHeading": "Apologies, an error occurred while processing your request.",
   "goBack": "Go Back",
   "notFound": "Not Found",
   "pageNotFound": "Sorry, this page does not exist.",
-  "pageNotFoundHeading": "Ouch! :|",
+  "pageNotFoundHeading": "Page not found",
   "pageNotFoundSubHeading": "Apologies, the page you were looking for was not found"
 }
