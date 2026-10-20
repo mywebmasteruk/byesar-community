@@ -1,0 +1,49 @@
+{
+  "name": "@kit/accounts",
+  "version": "0.1.0",
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "exports": {
+    "./personal-account-dropdown": "./src/components/personal-account-dropdown.tsx",
+    "./personal-account-settings": "./src/components/account-settings-container.tsx",
+    "./components": "./src/components/index.ts",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./api": "./src/server/api.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@kit/i18n": "workspace:*",
+    "nanoid": "catalog:",
+    "next-intl": "catalog:"
+  },
+  "devDependencies": {
+    "@hookform/resolvers": "catalog:",
+    "@kit/next": "workspace:*",
+    "@kit/shared": "workspace:*",
+    "@kit/supabase": "workspace:*",
+    "@kit/tsconfig": "workspace:*",
+    "@kit/ui": "workspace:*",
+    "@supabase/supabase-js": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "next-themes": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "react-hook-form": "catalog:",
+    "sonner": "catalog:",
+    "zod": "catalog:"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "name": "scripts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node ./src/dev.mjs",
+    "checks": "node ./src/checks.mjs",
+    "requirements": "node ./src/requirements.mjs"
+  },
+  "devDependencies": {
+    "@types/node": "catalog:"
+  }
+}

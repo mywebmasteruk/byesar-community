@@ -1,0 +1,39 @@
+{
+  "name": "@kit/supabase",
+  "version": "0.1.0",
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "exports": {
+    "./server-client": "./src/clients/server-client.ts",
+    "./server-admin-client": "./src/clients/server-admin-client.ts",
+    "./middleware-client": "./src/clients/middleware-client.ts",
+    "./browser-client": "./src/clients/browser-client.ts",
+    "./check-requires-mfa": "./src/check-requires-mfa.ts",
+    "./require-user": "./src/require-user.ts",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./database": "./src/database.types.ts",
+    "./auth": "./src/auth.ts"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@kit/tsconfig": "workspace:*",
+    "@supabase/ssr": "catalog:",
+    "@supabase/supabase-js": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "next": "catalog:",
+    "react": "catalog:",
+    "server-only": "catalog:",
+    "zod": "catalog:"
+  }
+}

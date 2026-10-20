@@ -1,0 +1,46 @@
+{
+  "name": "@kit/auth",
+  "version": "0.1.0",
+  "private": true,
+  "typesVersions": {
+    "*": {
+      "*": [
+        "src/*"
+      ]
+    }
+  },
+  "exports": {
+    "./sign-in": "./src/sign-in.ts",
+    "./sign-up": "./src/sign-up.ts",
+    "./password-reset": "./src/password-reset.ts",
+    "./shared": "./src/shared.ts",
+    "./mfa": "./src/mfa.ts",
+    "./captcha/client": "./src/captcha/client/index.ts",
+    "./captcha/server": "./src/captcha/server/index.ts",
+    "./resend-email-link": "./src/components/resend-auth-link-form.tsx"
+  },
+  "scripts": {
+    "clean": "git clean -xdf .turbo node_modules",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next-intl": "catalog:"
+  },
+  "devDependencies": {
+    "@hookform/resolvers": "catalog:",
+    "@kit/shared": "workspace:*",
+    "@kit/supabase": "workspace:*",
+    "@kit/tsconfig": "workspace:*",
+    "@kit/ui": "workspace:*",
+    "@marsidev/react-turnstile": "catalog:",
+    "@supabase/supabase-js": "catalog:",
+    "@tanstack/react-query": "catalog:",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "lucide-react": "catalog:",
+    "next": "catalog:",
+    "react-hook-form": "catalog:",
+    "sonner": "catalog:",
+    "zod": "catalog:"
+  }
+}
