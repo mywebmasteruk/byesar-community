@@ -84,7 +84,7 @@ Prerequisites:
 
 | Tool | Version | Needed for |
 | --- | --- | --- |
-| Node.js | 22.13 or newer | everything |
+| Node.js | 24 (22 installs and builds but the dev server fails) | everything |
 | pnpm | 11.18.0 (`npx pnpm@11.18.0` works without installing it) | everything |
 | Git | any recent | cloning |
 | Supabase CLI | 2.x | local database only |
@@ -157,6 +157,8 @@ cd apps/web && node --test --experimental-strip-types lib/community/*.test.mjs l
 | Posting says "captcha" or returns 403 | Captcha is on but the Turnstile keys are missing or belong to another domain. Add the right keys, or for local testing set `CAPTCHA_REQUIRED=false` |
 | Posting returns 429 | Rate limit reached (5 per hour per address). Wait, then try again |
 | `/moderation` says "Wrong token." | The token does not match `COMMUNITY_MODERATOR_TOKEN`. Check for extra spaces, and redeploy after changing it |
+| Install stops with "running from OneDrive" | The kit refuses folders under OneDrive/iCloud sync. Clone into a plain folder such as `~/projects` |
+| Dev server shows 500 and "URLPattern is not a constructor" | You are on Node 22. Use Node 24 (`nvm install 24`) |
 | `supabase start` fails | Docker Desktop is not running, or a port is in use. Start Docker, or use a hosted Supabase project |
 
 ## Configuration
