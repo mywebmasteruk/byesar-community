@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -10,7 +11,7 @@ const text = {
   ar: { empty: 'لا توجد أسئلة بعد.', disclaimer: 'رأي المجتمع، وليس فتوى أو نصيحة.', ask: 'اطرح سؤالاً' },
 } as const;
 
-export default async function CommunityPage({
+async function CommunityContent({
   params,
   searchParams,
 }: {
@@ -56,5 +57,13 @@ export default async function CommunityPage({
         <p className="mt-6">{t.empty}</p>
       )}
     </main>
+  );
+}
+
+export default function CommunityPage(props: Parameters<typeof CommunityContent>[0]) {
+  return (
+    <Suspense fallback={null}>
+      <CommunityContent {...props} />
+    </Suspense>
   );
 }

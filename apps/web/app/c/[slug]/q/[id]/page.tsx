@@ -1,3 +1,4 @@
+import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
@@ -11,7 +12,7 @@ const text = {
   ar: { back: 'رجوع', answers: 'الإجابات', none: 'لا توجد إجابات بعد.', disclaimer: 'رأي المجتمع، وليس فتوى أو نصيحة.' },
 } as const;
 
-export default async function QuestionPage({
+async function QuestionContent({
   params,
   searchParams,
 }: {
@@ -55,5 +56,13 @@ export default async function QuestionPage({
         <p className="mt-2">{t.none}</p>
       )}
     </main>
+  );
+}
+
+export default function QuestionPage(props: Parameters<typeof QuestionContent>[0]) {
+  return (
+    <Suspense fallback={null}>
+      <QuestionContent {...props} />
+    </Suspense>
   );
 }
