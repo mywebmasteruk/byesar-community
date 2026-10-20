@@ -14,3 +14,17 @@ test('turnstile fails closed with no secret or no token', async () => {
   process.env.TURNSTILE_SECRET_KEY = 's';
   assert.equal(await turnstileOk(undefined, '1.1.1.1'), false);
 });
+
+import { gate } from './guards.ts';
+const post = (body, ip) => new Request('http://x/', { method: 'POST', body, headers: { 'x-forwarded-for': ip } });
+test('gate: empty, malformed and tokenless bodies get 403 before any validation', async () => {
+  process.env.TURNSTILE_SECRET_KEY = 's';
+  for (const [i, b] of ['', 'not json', '{}', '[]', '{"body":"x"}'].entries()) {
+    const g = await gate(post(b, `9.9.9.${i}`), 'g');
+    assert.equal(g.fail?.status, 403, `body ${JSON.stringify(b)}`);
+  }
+});
+test('gate: rate limit runs before the captcha check', async () => {
+  for (let i = 0; i < 5; i++) await gate(post('{}', '8.8.8.8'), 'rl');
+  assert.equal((await gate(post('{}', '8.8.8.8'), 'rl')).fail?.status, 429);
+});

@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { rateLimited, turnstileOk } from '~/lib/community/guards';
+import { gate } from '~/lib/community/guards';
 import { isValidSlug, pickLocale } from '~/lib/community/resolve';
-import { clientIp, serviceDb } from '~/lib/community/server-db';
+import { serviceDb } from '~/lib/community/server-db';
 import { decideSubmission } from '~/lib/moderation/submit';
 
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -11,16 +11,12 @@ const UUID = /^[0-9a-f-]{36}$/i;
 export async function POST(req: Request, ctx: { params: Promise<{ slug: string }> }) {
   const { slug } = await ctx.params;
   if (!isValidSlug(slug)) return NextResponse.json({ error: 'not_found' }, { status: 404 });
-  const ip = clientIp(req);
-  if (rateLimited(`a:${ip}`)) return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
-
-  const form = (await req.json().catch(() => null)) as {
-    question_id?: string; body?: string; locale?: string; token?: string;
-  } | null;
-  if (!form || !form.question_id || !UUID.test(form.question_id)) {
+  const g = await gate(req, 'a');
+  if (g.fail) return NextResponse.json({ error: g.fail.error }, { status: g.fail.status });
+  const form = g.body as { question_id?: string; body?: string; locale?: string };
+  if (!form.question_id || !UUID.test(form.question_id)) {
     return NextResponse.json({ error: 'bad_request' }, { status: 400 });
   }
-  if (!(await turnstileOk(form.token, ip))) return NextResponse.json({ error: 'captcha' }, { status: 403 });
 
   const db = serviceDb();
   const { data: community } = await db.from('communities').select('id,pre_moderation').eq('slug', slug).maybeSingle();

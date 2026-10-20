@@ -1,8 +1,8 @@
 import { NextResponse } from 'next/server';
 
-import { rateLimited, turnstileOk } from '~/lib/community/guards';
+import { gate } from '~/lib/community/guards';
 import { isValidSlug } from '~/lib/community/resolve';
-import { clientIp, serviceDb } from '~/lib/community/server-db';
+import { serviceDb } from '~/lib/community/server-db';
 
 const UUID = /^[0-9a-f-]{36}$/i;
 
@@ -10,16 +10,13 @@ const UUID = /^[0-9a-f-]{36}$/i;
 export async function POST(req: Request, ctx: { params: Promise<{ slug: string }> }) {
   const { slug } = await ctx.params;
   if (!isValidSlug(slug)) return NextResponse.json({ error: 'not_found' }, { status: 404 });
-  const ip = clientIp(req);
-  if (rateLimited(`r:${ip}`, 10)) return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
-  const f = (await req.json().catch(() => null)) as {
-    target_type?: string; target_id?: string; reason?: string; token?: string;
-  } | null;
-  const reason = (f?.reason ?? '').trim().slice(0, 500);
-  if (!f || !reason || !f.target_id || !UUID.test(f.target_id) || !['question', 'answer'].includes(f.target_type ?? '')) {
+  const g = await gate(req, 'r', 10);
+  if (g.fail) return NextResponse.json({ error: g.fail.error }, { status: g.fail.status });
+  const f = g.body as { target_type?: string; target_id?: string; reason?: string };
+  const reason = (f.reason ?? '').trim().slice(0, 500);
+  if (!reason || !f.target_id || !UUID.test(f.target_id) || !['question', 'answer'].includes(f.target_type ?? '')) {
     return NextResponse.json({ error: 'bad_request' }, { status: 400 });
   }
-  if (!(await turnstileOk(f.token, ip))) return NextResponse.json({ error: 'captcha' }, { status: 403 });
   const db = serviceDb();
   const { data: community } = await db.from('communities').select('id').eq('slug', slug).maybeSingle();
   if (!community) return NextResponse.json({ error: 'not_found' }, { status: 404 });

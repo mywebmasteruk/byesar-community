@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-import { rateLimited, turnstileOk } from '~/lib/community/guards';
+import { gate } from '~/lib/community/guards';
 import { isValidSlug, pickLocale } from '~/lib/community/resolve';
 import { decideSubmission } from '~/lib/moderation/submit';
 
@@ -11,14 +11,9 @@ export async function POST(req: Request, ctx: { params: Promise<{ slug: string }
   const { slug } = await ctx.params;
   if (!isValidSlug(slug)) return NextResponse.json({ error: 'not_found' }, { status: 404 });
 
-  const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
-  if (rateLimited(`q:${ip}`)) return NextResponse.json({ error: 'rate_limited' }, { status: 429 });
-
-  const form = (await req.json().catch(() => null)) as {
-    title?: string; body?: string; locale?: string; token?: string;
-  } | null;
-  if (!form) return NextResponse.json({ error: 'bad_request' }, { status: 400 });
-  if (!(await turnstileOk(form.token, ip))) return NextResponse.json({ error: 'captcha' }, { status: 403 });
+  const g = await gate(req, 'q');
+  if (g.fail) return NextResponse.json({ error: g.fail.error }, { status: g.fail.status });
+  const form = g.body as { title?: string; body?: string; locale?: string };
 
   const db = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.SUPABASE_SECRET_KEY!, {
     auth: { persistSession: false },
