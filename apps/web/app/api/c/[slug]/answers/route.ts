@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { gate } from '~/lib/community/guards';
+import { captchaRequired, gate } from '~/lib/community/guards';
 import { isValidSlug, pickLocale } from '~/lib/community/resolve';
 import { serviceDb } from '~/lib/community/server-db';
 import { decideSubmission } from '~/lib/moderation/submit';
@@ -27,7 +27,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ slug: string }
 
   const { data: terms } = await db.from('blocked_terms').select('term').or(`community_id.is.null,community_id.eq.${community.id}`);
   const locale = pickLocale(form.locale);
-  const decision = await decideSubmission({ body: form.body ?? '', locale }, community, (terms ?? []).map((t) => t.term));
+  const decision = await decideSubmission({ body: form.body ?? '', locale }, community, (terms ?? []).map((t) => t.term), !captchaRequired());
   if (!decision.ok) return NextResponse.json({ error: decision.reason }, { status: 422 });
 
   const { error } = await db.from('answers').insert({
@@ -35,5 +35,5 @@ export async function POST(req: Request, ctx: { params: Promise<{ slug: string }
     status: decision.status, religious_flag: decision.religious_flag,
   });
   if (error) return NextResponse.json({ error: 'server' }, { status: 500 });
-  return NextResponse.json({ ok: true, status: decision.status }, { status: 201 });
+  return NextResponse.json({ ok: true, status: decision.status }, { status: decision.status === 'pending' ? 202 : 201 });
 }

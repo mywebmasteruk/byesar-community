@@ -28,3 +28,12 @@ test('gate: rate limit runs before the captcha check', async () => {
   for (let i = 0; i < 5; i++) await gate(post('{}', '8.8.8.8'), 'rl');
   assert.equal((await gate(post('{}', '8.8.8.8'), 'rl')).fail?.status, 429);
 });
+
+test('captcha off: no token needed, strict 5/hour per IP, default stays required', async () => {
+  delete process.env.CAPTCHA_REQUIRED;
+  assert.equal((await gate(post('{}', '7.7.7.1'), 'dflt')).fail?.status, 403);
+  process.env.CAPTCHA_REQUIRED = 'false';
+  for (let i = 0; i < 5; i++) assert.equal((await gate(post('{}', '7.7.7.2'), 'off')).fail, null);
+  assert.equal((await gate(post('{}', '7.7.7.2'), 'off')).fail?.status, 429);
+  delete process.env.CAPTCHA_REQUIRED;
+});

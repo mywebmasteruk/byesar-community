@@ -24,16 +24,27 @@ export async function turnstileOk(token: string | undefined, ip: string): Promis
   return json.success === true;
 }
 
+// Captcha is required unless the env explicitly says "false" (demo fallback only).
+export function captchaRequired(): boolean {
+  return process.env.CAPTCHA_REQUIRED !== 'false';
+}
+
 export type Gated = { fail: { status: number; error: string } } | { fail: null; body: Record<string, unknown> };
 
 // Bot defence first: rate limit, then captcha, and only then does the caller validate.
 // An empty or malformed body is treated as a missing token (403), never reaches validation.
 export async function gate(req: Request, key: string, max = 5): Promise<Gated> {
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ?? 'unknown';
-  if (rateLimited(`${key}:${ip}`, max)) return { fail: { status: 429, error: 'rate_limited' } };
+  const strict = !captchaRequired();
+  // Without a captcha the limit is strict: 5 per hour and 20 per day per IP.
+  const limited = strict
+    ? rateLimited(`${key}h:${ip}`, 5, 3_600_000) || rateLimited(`${key}d:${ip}`, 20, 86_400_000)
+    : rateLimited(`${key}:${ip}`, max);
+  if (limited) return { fail: { status: 429, error: 'rate_limited' } };
   const parsed = await req.json().catch(() => null);
   const body = parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? (parsed as Record<string, unknown>) : {};
   const token = typeof body.token === 'string' ? body.token : undefined;
+  if (strict) return { fail: null, body };
   if (!(await turnstileOk(token, ip))) return { fail: { status: 403, error: 'captcha' } };
   return { fail: null, body };
 }

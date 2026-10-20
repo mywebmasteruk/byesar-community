@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 
-import { gate } from '~/lib/community/guards';
+import { captchaRequired, gate } from '~/lib/community/guards';
 import { isValidSlug, pickLocale } from '~/lib/community/resolve';
 import { decideSubmission } from '~/lib/moderation/submit';
 
@@ -27,6 +27,7 @@ export async function POST(req: Request, ctx: { params: Promise<{ slug: string }
     { title: form.title, body: form.body ?? '', locale },
     community,
     (terms ?? []).map((t) => t.term),
+    !captchaRequired(),
   );
   if (!decision.ok) return NextResponse.json({ error: decision.reason }, { status: 422 });
 
@@ -39,5 +40,5 @@ export async function POST(req: Request, ctx: { params: Promise<{ slug: string }
     religious_flag: decision.religious_flag,
   });
   if (error) return NextResponse.json({ error: 'server' }, { status: 500 });
-  return NextResponse.json({ ok: true, status: decision.status }, { status: 201 });
+  return NextResponse.json({ ok: true, status: decision.status }, { status: decision.status === 'pending' ? 202 : 201 });
 }

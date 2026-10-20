@@ -16,3 +16,11 @@ test('religious flag forces pending', async () => {
   const r = await d(q('hello'), open, []);
   assert.equal(r.status, 'pending'); assert.equal(r.religious_flag, true);
 });
+
+test('more than 2 links is refused; forceHold holds even without pre-moderation', async () => {
+  const c = { pre_moderation: false };
+  const r = await d({ body: 'http://a.com http://b.com www.c.com', locale: 'en' }, c, []);
+  assert.equal(r.reason, 'too_many_links');
+  const h = await d({ body: 'plain question', locale: 'en' }, c, [], true);
+  assert.equal(h.status, 'pending');
+});
