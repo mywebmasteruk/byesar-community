@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import { createClient } from '~/lib/community/public-client';
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
 
-export const dynamic = 'force-dynamic';
 
 const UUID = /^[0-9a-f-]{36}$/i;
 const text = {

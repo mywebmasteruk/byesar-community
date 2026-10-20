@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
 import { createClient } from '~/lib/community/public-client';
 
-export const dynamic = 'force-dynamic';
 
 const text = {
   en: { empty: 'No questions yet.', disclaimer: 'Community opinion, not a fatwa or advice.', ask: 'Ask a question' },
