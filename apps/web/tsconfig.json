@@ -1,6 +1,7 @@
 {
   "extends": "@kit/tsconfig/base.json",
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
     "paths": {
       "~/*": ["./app/*"],
       "~/config/*": ["./config/*"],
