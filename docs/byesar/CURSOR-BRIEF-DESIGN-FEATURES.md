@@ -36,3 +36,6 @@ Moderation queue filters and bulk approve/reject, report reasons, banned-words a
 
 ## Parked: do not build, needs the owner's go
 Email notifications, AI answer drafts or AI moderation, any paid service, languages beyond EN and AR.
+
+## Added by VP (20 Oct)
+- Batch 1: add a footer link to the public repo, https://github.com/mywebmasteruk/byesar-community (source and licence, MIT).
