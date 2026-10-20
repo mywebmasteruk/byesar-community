@@ -58,13 +58,13 @@ const ErrorPage = ({
 
               <Button
                 nativeButton={false}
-                render={<Link href={'/contact'} />}
+                render={<Link href={'https://github.com/mywebmasteruk/byesar-community/issues'} />}
                 className={'w-full'}
                 variant={'outline'}
               >
                 <MessageCircle className={'mr-2 h-4'} />
 
-                <Trans i18nKey={'common.contactUs'} />
+                <Trans i18nKey={'common.reportProblem'} />
               </Button>
             </div>
           </div>
