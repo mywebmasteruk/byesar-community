@@ -20,7 +20,7 @@ const getUser = (request: NextRequest, response: NextResponse) => {
 };
 
 export async function proxy(request: NextRequest) {
-  // a product subdomain (e.g. prayer.<root domain>) is served by /c/<slug>
+  // a product subdomain (e.g. demo.<root domain>) is served by /c/<slug>
   const slug = communitySlugFromHost(
     request.headers.get('host') ?? '',
     process.env.COMMUNITY_ROOT_DOMAIN ?? '',

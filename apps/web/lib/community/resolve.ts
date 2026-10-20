@@ -1,5 +1,5 @@
 // Works out which community (product space) a request is for.
-// prayer.community.example -> "prayer"; the bare root domain, www, localhost
+// demo.community.example -> "demo"; the bare root domain, www, localhost
 // and *.vercel.app preview hosts give null, and the path form /c/<slug> is used instead.
 const SLUG = /^[a-z0-9](?:[a-z0-9-]{0,40}[a-z0-9])?$/;
 const RESERVED = new Set(['www', 'app', 'api', 'admin', 'auth', 'mail']);
