@@ -5,6 +5,7 @@ import { checkRequiresMultiFactorAuthentication } from '@kit/supabase/check-requ
 import { createMiddlewareClient } from '@kit/supabase/middleware-client';
 
 import pathsConfig from '~/config/paths.config';
+import { communitySlugFromHost } from '~/lib/community/resolve';
 
 const NEXT_ACTION_HEADER = 'next-action';
 
@@ -19,6 +20,18 @@ const getUser = (request: NextRequest, response: NextResponse) => {
 };
 
 export async function proxy(request: NextRequest) {
+  // a product subdomain (e.g. duaprayer.<root domain>) is served by /c/<slug>
+  const slug = communitySlugFromHost(
+    request.headers.get('host') ?? '',
+    process.env.COMMUNITY_ROOT_DOMAIN ?? '',
+  );
+
+  if (slug && !request.nextUrl.pathname.startsWith('/c/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/c/${slug}${url.pathname === '/' ? '' : url.pathname}`;
+    return NextResponse.rewrite(url);
+  }
+
   const response = NextResponse.next();
 
   // set a unique request ID for each request
