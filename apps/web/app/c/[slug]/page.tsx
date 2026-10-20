@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
@@ -47,7 +48,9 @@ export default async function CommunityPage({
       {questions?.length ? (
         <ul className="mt-6 space-y-3">
           {questions.map((q) => (
-            <li key={q.id} className="rounded border p-3">{q.title}</li>
+            <li key={q.id} className="rounded border p-3">
+              <Link href={`/c/${slug}/q/${q.id}?lang=${locale}`}>{q.title}</Link>
+            </li>
           ))}
         </ul>
       ) : (
