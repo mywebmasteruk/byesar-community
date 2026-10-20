@@ -16,7 +16,7 @@ with c as (
     ('demo','Which prayer-time apps do you use while travelling?','Looking for something that works offline.','en', array['apps','travel']),
     ('demo','كيف أحافظ على أذكار الصباح؟','أنسى كثيراً، فما الطرق العملية التي ساعدتكم؟','ar', array['أذكار','عادات']),
     ('demo-arabic','كيف نعلن عن جدول دروس المسجد للجميع؟','نريد طريقة بسيطة لنشر الجدول الأسبوعي.','ar', array['مسجد','إعلانات']),
-    ('demo-arabic','What should a small community website include first?','Prayer times, contact details, events. Anything else?','en', array['masjid','website'])
+    ('demo-arabic','What should a small community website include first?','Prayer times, contact details, events. Anything else?','en', array['community','website'])
   ) as v(slug,title,body,locale,tags) on v.slug = c.slug
   returning id, community_id, locale
 )
