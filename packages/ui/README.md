@@ -5,8 +5,8 @@ This package is responsible for managing the UI components and styles across the
 This package define two sets of components:
 
 - `Shadcn UI`: A set of UI components that can be used across the app using shadcn UI
-- `Makerkit-specific`: Components specific to MakerKit
+- `Starter-specific`: Components specific to this starter
 
 ## Installing a Shadcn UI component
 
- Please refer to the [documentation](https://makerkit.dev/docs/next-supabase-turbo/components/shadcn).
+ See README.upstream.md for the upstream component notes.

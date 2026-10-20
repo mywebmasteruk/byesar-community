@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from '@kit/ui/dropdown-menu';
 import { NavigationMenu, NavigationMenuList } from '@kit/ui/navigation-menu';
-import { Trans } from '@kit/ui/trans';
 
 import { SiteNavigationItem } from './site-navigation-item';
 
@@ -37,19 +36,21 @@ const links: Record<
     path: string;
   }
 > = {
-  /*
-    FAQ: {
-      label: 'marketing.faq',
-      path: '/faq',
-    },
-     */
+  Demo: {
+    label: 'Demo',
+    path: '/c/demo',
+  },
+  DemoArabic: {
+    label: 'Demo (Arabic)',
+    path: '/c/demo-arabic',
+  },
 };
 
 export function SiteNavigation() {
   const NavItems = Object.values(links).map((item) => {
     return (
       <SiteNavigationItem key={item.path} path={item.path}>
-        <Trans i18nKey={item.label} />
+        {item.label}
       </SiteNavigationItem>
     );
   });
@@ -74,8 +75,11 @@ export function SiteNavigation() {
 function MobileDropdown() {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger aria-label={'Open Menu'}>
-        <Menu className={'h-8 w-8'} />
+      <DropdownMenuTrigger
+        aria-label={'Open Menu'}
+        className="focus-visible:ring-ring inline-flex min-h-11 min-w-11 items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-2"
+      >
+        <Menu className={'h-6 w-6'} />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent className={'w-full'}>
@@ -87,7 +91,7 @@ function MobileDropdown() {
               key={item.path}
               render={<Link className={className} href={item.path} />}
             >
-              <Trans i18nKey={item.label} />
+              {item.label}
             </DropdownMenuItem>
           );
         })}

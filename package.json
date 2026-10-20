@@ -3,8 +3,7 @@
   "version": "1.0.1",
   "private": true,
   "author": {
-    "name": "MakerKit",
-    "url": "https://makerkit.dev"
+    "name": "Community"
   },
   "sideEffects": false,
   "scripts": {

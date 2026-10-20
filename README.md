@@ -1,13 +1,13 @@
-# Byesar Community
+# Community
 
 An open-source question-and-answer community engine. One deployment runs many separate community spaces, each with its own questions, answers, moderators and settings. It supports English and Arabic (right-to-left) and is built so that nothing becomes public until a moderator has approved it.
 
-Byesar Community is part of the Byesar group. It is MIT licensed and built on the Makerkit Lite starter (see [Licence](#licence)).
+It is MIT licensed (see [Licence](#licence)).
 
 ## Live demo
 
-- English: https://byesar-community-demo.vercel.app/c/demo
-- Arabic (right-to-left): https://byesar-community-demo.vercel.app/c/demo-arabic?lang=ar
+- English: `/c/demo`
+- Arabic (right-to-left): `/c/demo-arabic?lang=ar`
 
 The demo holds sample data only and may be reset at any time. Posts you submit there are held for approval and may never appear.
 
@@ -68,7 +68,7 @@ You will create two free accounts (Supabase for the database, Vercel for hosting
 
 **Step 2. Create the website.**
 
-1. Click this button: [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmywebmasteruk%2Fbyesar-community&root-directory=apps%2Fweb&install-command=cd%20..%2F..%20%26%26%20npx%20--yes%20pnpm%4011.18.0%20install%20--frozen-lockfile&env=NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,SUPABASE_SECRET_KEY,COMMUNITY_MODERATOR_TOKEN&envDescription=See%20the%20Configuration%20section%20of%20the%20README&project-name=community&repository-name=community)
+1. On Vercel, create a new project from this repository. Set the root directory to `apps/web`. Set the install command to `cd ../.. && npx --yes pnpm@11.18.0 install --frozen-lockfile`. Ask for these environment variables: `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`, `COMMUNITY_MODERATOR_TOKEN`.
 2. Vercel asks you to sign in and copy the repository into your own account.
 3. Fill in the five values it asks for:
    - `NEXT_PUBLIC_SITE_URL`: your site address. If you do not know it yet, enter `https://example.com` now and correct it in Vercel settings after the first deploy.
@@ -93,8 +93,8 @@ Prerequisites:
 You can skip the Supabase CLI and Docker by using a free hosted Supabase project as in Route A, Step 1.
 
 ```bash
-git clone https://github.com/mywebmasteruk/byesar-community.git
-cd byesar-community
+git clone <repository-url>
+cd <repository-directory>
 npx pnpm@11.18.0 install
 cp apps/web/.env.example apps/web/.env.local
 ```
@@ -201,4 +201,4 @@ Issues and pull requests are welcome. Please work on a branch, keep the write ga
 
 ## Licence
 
-MIT. See [LICENSE](LICENSE). This project is built on the MIT-licensed Makerkit Lite starter; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) and [README.upstream.md](README.upstream.md).
+MIT. See [LICENSE](LICENSE). Third-party notices are in [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). The upstream starter readme is kept as [README.upstream.md](README.upstream.md).

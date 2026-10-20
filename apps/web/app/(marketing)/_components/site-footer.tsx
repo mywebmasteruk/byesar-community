@@ -26,7 +26,7 @@ export async function SiteFooter() {
 
   return (
     <Footer
-      logo={<AppLogo className="w-[85px] md:w-[95px]" />}
+      logo={<AppLogo />}
       description={<Trans i18nKey="marketing.footerDescription" />}
       copyright={
         <Trans
@@ -39,15 +39,15 @@ export async function SiteFooter() {
       }
       sections={[
         {
-          heading: 'Get Started',
+          heading: 'Communities',
           links: [
             {
-              href: '/auth/sign-in',
-              label: <Trans i18nKey="auth.signIn" />,
+              href: '/c/demo',
+              label: 'Demo',
             },
             {
-              href: '/auth/sign-up',
-              label: <Trans i18nKey="auth.signUp" />,
+              href: '/c/demo-arabic?lang=ar',
+              label: 'Demo (Arabic)',
             },
           ],
         },

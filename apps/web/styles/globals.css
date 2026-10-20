@@ -12,7 +12,8 @@
 @import './theme.utilities.css';
 @import './shadcn-ui.css';
 @import './markdoc.css';
-@import './makerkit.css';
+@import './starter.css';
+@import './tokens.css';
 
 /* plugins - update the below if you add a new plugin */
 @plugin "tailwindcss-animate";

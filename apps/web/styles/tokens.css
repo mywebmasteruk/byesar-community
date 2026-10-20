@@ -1,0 +1,96 @@
+/*
+* Public theme tokens.
+* No theme tokens were defined for these pages, so this file proposes a small
+* light and dark set: deep pine, warm parchment, and ink. Calm and modest.
+* Semantic theme colours below point at these tokens.
+*/
+
+@layer base {
+  :root {
+    --tone-ink: #1a2422;
+    --tone-parchment: #f4f1ea;
+    --tone-paper: #fffcf8;
+    --tone-pine: #1b4f46;
+    --tone-on-pine: #f7f4ee;
+    --tone-sand: #e8e2d6;
+    --tone-muted: #3d4a46;
+    --tone-line: #d3cbc0;
+    --tone-pine-soft: #e4eeeb;
+    --tone-gold: #6f5424;
+    --tone-danger: #8b2e2e;
+    --tone-on-danger: #fffcf8;
+    --tone-focus: #1b4f46;
+
+    --background: var(--tone-parchment);
+    --foreground: var(--tone-ink);
+    --card: var(--tone-paper);
+    --card-foreground: var(--tone-ink);
+    --popover: var(--tone-paper);
+    --popover-foreground: var(--tone-ink);
+    --primary: var(--tone-pine);
+    --primary-foreground: var(--tone-on-pine);
+    --secondary: var(--tone-sand);
+    --secondary-foreground: var(--tone-ink);
+    --muted: var(--tone-sand);
+    --muted-foreground: var(--tone-muted);
+    --accent: var(--tone-pine-soft);
+    --accent-foreground: var(--tone-ink);
+    --destructive: var(--tone-danger);
+    --destructive-foreground: var(--tone-on-danger);
+    --border: var(--tone-line);
+    --input: var(--tone-line);
+    --ring: var(--tone-focus);
+    --sidebar-background: var(--tone-paper);
+    --sidebar-foreground: var(--tone-muted);
+    --sidebar-primary: var(--tone-pine);
+    --sidebar-primary-foreground: var(--tone-on-pine);
+    --sidebar-accent: var(--tone-sand);
+    --sidebar-accent-foreground: var(--tone-ink);
+    --sidebar-border: var(--tone-line);
+    --sidebar-ring: var(--tone-focus);
+  }
+
+  .dark {
+    --tone-ink: #f3efe6;
+    --tone-parchment: #101614;
+    --tone-paper: #1a2220;
+    --tone-pine: #8fc4b8;
+    --tone-on-pine: #10211e;
+    --tone-sand: #24302c;
+    --tone-muted: #c9d4ce;
+    --tone-line: #31403b;
+    --tone-pine-soft: #1c2e2b;
+    --tone-gold: #e2c78a;
+    --tone-danger: #f0b4b4;
+    --tone-on-danger: #2a1212;
+    --tone-focus: #b7e0d6;
+
+    --background: var(--tone-parchment);
+    --foreground: var(--tone-ink);
+    --card: var(--tone-paper);
+    --card-foreground: var(--tone-ink);
+    --popover: var(--tone-paper);
+    --popover-foreground: var(--tone-ink);
+    --primary: var(--tone-pine);
+    --primary-foreground: var(--tone-on-pine);
+    --secondary: var(--tone-sand);
+    --secondary-foreground: var(--tone-ink);
+    --muted: var(--tone-sand);
+    --muted-foreground: var(--tone-muted);
+    --accent: var(--tone-pine-soft);
+    --accent-foreground: var(--tone-ink);
+    --destructive: var(--tone-danger);
+    --destructive-foreground: var(--tone-on-danger);
+    --border: var(--tone-line);
+    --input: var(--tone-line);
+    --ring: var(--tone-focus);
+    --sidebar-background: var(--tone-paper);
+    --sidebar-foreground: var(--tone-ink);
+    --sidebar-primary: var(--tone-pine);
+    --sidebar-primary-foreground: var(--tone-on-pine);
+    --sidebar-accent: var(--tone-sand);
+    --sidebar-accent-foreground: var(--tone-ink);
+    --sidebar-border: var(--tone-line);
+    --sidebar-ring: var(--tone-focus);
+  }
+}

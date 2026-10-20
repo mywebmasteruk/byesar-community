@@ -227,7 +227,7 @@ function CustomersTable() {
   const customers = [
     {
       name: 'John Doe',
-      email: 'john@makerkit.dev',
+      email: 'john@example.com',
       plan: 'Pro',
       mrr: '$120.5',
       logins: 1020,
@@ -245,7 +245,7 @@ function CustomersTable() {
     },
     {
       name: 'Robert Johnson',
-      email: 'robert@makerkit.dev',
+      email: 'robert@example.com',
       plan: 'Pro',
       mrr: '$500.1',
       logins: 2050,
@@ -254,7 +254,7 @@ function CustomersTable() {
     },
     {
       name: 'Olivia Brown',
-      email: 'olivia@makerkit.dev',
+      email: 'olivia@example.com',
       plan: 'Basic',
       mrr: '$10',
       logins: 50,
@@ -263,7 +263,7 @@ function CustomersTable() {
     },
     {
       name: 'Michael Davis',
-      email: 'michael@makerkit.dev',
+      email: 'michael@example.com',
       plan: 'Pro',
       mrr: '$300.2',
       logins: 1520,
@@ -272,7 +272,7 @@ function CustomersTable() {
     },
     {
       name: 'Emily Jones',
-      email: 'emily@makerkit.dev',
+      email: 'emily@example.com',
       plan: 'Pro',
       mrr: '$75.7',
       logins: 780,
@@ -281,7 +281,7 @@ function CustomersTable() {
     },
     {
       name: 'Daniel Garcia',
-      email: 'daniel@makerkit.dev',
+      email: 'daniel@example.com',
       plan: 'Basic',
       mrr: '$50',
       logins: 320,
@@ -290,7 +290,7 @@ function CustomersTable() {
     },
     {
       name: 'Liam Miller',
-      email: 'liam@makerkit.dev',
+      email: 'liam@example.com',
       plan: 'Pro',
       mrr: '$90.8',
       logins: 1260,
@@ -299,7 +299,7 @@ function CustomersTable() {
     },
     {
       name: 'Emma Clark',
-      email: 'emma@makerkit.dev',
+      email: 'emma@example.com',
       plan: 'Basic',
       mrr: '$0',
       logins: 20,
@@ -308,7 +308,7 @@ function CustomersTable() {
     },
     {
       name: 'Elizabeth Rodriguez',
-      email: 'liz@makerkit.dev',
+      email: 'liz@example.com',
       plan: 'Pro',
       mrr: '$145.3',
       logins: 1380,
@@ -317,7 +317,7 @@ function CustomersTable() {
     },
     {
       name: 'James Martinez',
-      email: 'james@makerkit.dev',
+      email: 'james@example.com',
       plan: 'Pro',
       mrr: '$120.5',
       logins: 940,
@@ -326,7 +326,7 @@ function CustomersTable() {
     },
     {
       name: 'Charlotte Ryan',
-      email: 'carlotte@makerkit.dev',
+      email: 'carlotte@example.com',
       plan: 'Basic',
       mrr: '$80.6',
       logins: 460,
@@ -335,7 +335,7 @@ function CustomersTable() {
     },
     {
       name: 'Lucas Evans',
-      email: 'lucas@makerkit.dev',
+      email: 'lucas@example.com',
       plan: 'Pro',
       mrr: '$210.3',
       logins: 1850,
@@ -344,7 +344,7 @@ function CustomersTable() {
     },
     {
       name: 'Sophia Wilson',
-      email: 'sophia@makerkit.dev',
+      email: 'sophia@example.com',
       plan: 'Basic',
       mrr: '$10',
       logins: 35,
@@ -353,7 +353,7 @@ function CustomersTable() {
     },
     {
       name: 'William Kelly',
-      email: 'will@makerkit.dev',
+      email: 'will@example.com',
       plan: 'Pro',
       mrr: '$350.2',
       logins: 1760,
@@ -362,7 +362,7 @@ function CustomersTable() {
     },
     {
       name: 'Oliver Thomas',
-      email: 'olly@makerkit.dev',
+      email: 'olly@example.com',
       plan: 'Pro',
       mrr: '$145.6',
       logins: 1350,
@@ -371,7 +371,7 @@ function CustomersTable() {
     },
     {
       name: 'Samantha White',
-      email: 'sam@makerkit.dev',
+      email: 'sam@example.com',
       plan: 'Basic',
       mrr: '$60.3',
       logins: 425,
@@ -380,7 +380,7 @@ function CustomersTable() {
     },
     {
       name: 'Benjamin Lewis',
-      email: 'ben@makerkit.dev',
+      email: 'ben@example.com',
       plan: 'Pro',
       mrr: '$175.8',
       logins: 1600,
@@ -389,7 +389,7 @@ function CustomersTable() {
     },
     {
       name: 'Zoe Harris',
-      email: 'zoe@makerkit.dev',
+      email: 'zoe@example.com',
       plan: 'Basic',
       mrr: '$0',
       logins: 18,
@@ -398,7 +398,7 @@ function CustomersTable() {
     },
     {
       name: 'Zachary Nelson',
-      email: 'zac@makerkit.dev',
+      email: 'zac@example.com',
       plan: 'Pro',
       mrr: '$255.9',
       logins: 1785,

@@ -1,4 +1,4 @@
--- Byesar Community core schema. One engine, many product spaces ("communities").
+-- Community core schema. One engine, many spaces ("communities").
 create table communities (
   id uuid primary key default gen_random_uuid(),
   slug text unique not null,                -- subdomain, e.g. demo

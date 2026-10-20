@@ -46,8 +46,8 @@
   "signedInAs": "Signed in as",
   "pageOfPages": "Page {page} of {total}",
   "noData": "No data available",
-  "pageNotFoundHeading": "Ouch! :|",
-  "errorPageHeading": "Ouch! :|",
+  "pageNotFoundHeading": "404",
+  "errorPageHeading": "Error",
   "notifications": "Notifications",
   "noNotifications": "No notifications",
   "justNow": "Just now",
@@ -74,7 +74,7 @@
     }
   },
   "cookieBanner": {
-    "title": "Hey, we use cookies \uD83C\uDF6A",
+    "title": "We use cookies",
     "description": "This website uses cookies to ensure you get the best experience on our website.",
     "reject": "Reject",
     "accept": "Accept"
