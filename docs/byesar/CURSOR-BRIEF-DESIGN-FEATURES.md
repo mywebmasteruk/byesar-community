@@ -1,6 +1,6 @@
 # Cursor worker brief: design and features (BYE-90)
 
-Owner: Abdelilah. Planner and verifier: BY-CTO1 (Claude). Builder: BY-CTO1-Cursor.
+Owner: the founder. Planner and verifier: BY-CTO1 (Claude). Builder: BY-CTO1-Cursor.
 Repo: mywebmasteruk/byesar-community (private until the owner's go). Demo: https://byesar-community-demo.vercel.app
 
 ## Rules that never change
@@ -11,7 +11,7 @@ Repo: mywebmasteruk/byesar-community (private until the owner's go). Demo: https
 5. Halal and modest: no imagery of people, modest palette, no fatwa-style content, no AI-generated content.
 6. Every new feature sits behind a per-community on/off setting (column on `communities`, default off unless the batch says otherwise), so nothing can break the live demo.
 7. No secrets in the repo. No env values printed. Keys live in Vercel env only.
-8. Mobile first. Arabic RTL fully mirrored (`/c/masjidweb-demo?lang=ar`). WCAG AA contrast, visible keyboard focus, a label on every field.
+8. Mobile first. Arabic RTL fully mirrored (`/c/demo-mosque?lang=ar`). WCAG AA contrast, visible keyboard focus, a label on every field.
 9. Run `npx --yes pnpm@11.18.0 --filter web typecheck` and `node --test --experimental-strip-types lib/community/*.test.mjs lib/moderation/*.test.mjs` (from apps/web) before every push. All existing tests (19) must still pass.
 10. Do not run SQL on the demo database. Put schema changes in a new file under `apps/web/supabase/migrations/` and tell BY-CTO1; BY-CTO1 applies it.
 11. Proof per batch, in `docs/byesar/proof/<batch>/`: screenshots at 375px and desktop, EN and AR, community page and the form; test output; Lighthouse accessibility score. Preview URL first (`vercel deploy`, no `--prod`).

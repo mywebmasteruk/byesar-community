@@ -1,7 +1,7 @@
 -- Byesar Community core schema. One engine, many product spaces ("communities").
 create table communities (
   id uuid primary key default gen_random_uuid(),
-  slug text unique not null,                -- subdomain, e.g. duaprayer
+  slug text unique not null,                -- subdomain, e.g. prayer
   name_en text not null,
   name_ar text,
   default_locale text not null default 'en' check (default_locale in ('en','ar')),
