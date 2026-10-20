@@ -52,34 +52,112 @@ Voting exists as a server route for signed-in users, but there is no sign-in or 
 - pnpm workspace with Turborepo
 - Node test runner for unit tests
 
-## Quick start
+## Installation
 
-You need Node.js 22.13 or newer, a Supabase project (or the Supabase CLI for a local one), and optionally a Cloudflare Turnstile widget.
+Pick one route. Route A needs no programming. Route B is for developers.
+
+### Route A: put it online (no programming)
+
+You will create two free accounts (Supabase for the database, Vercel for hosting) and click through a few screens. About 20 minutes.
+
+**Step 1. Create the database.**
+
+1. Sign up at https://supabase.com and click New project. Choose a name, a database password (save it) and a region near your visitors.
+2. When the project is ready, open Project settings, then API. Keep this page open; you need three values from it: the Project URL, the publishable key, and the secret key. Treat the secret key like a password.
+3. Open the SQL Editor, click New query, and paste the contents of each file in `apps/web/supabase/migrations/` (oldest filename first). Press Run after each one. You should see "Success".
+
+**Step 2. Create the website.**
+
+1. Click this button: [Deploy with Vercel](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fmywebmasteruk%2Fbyesar-community&root-directory=apps%2Fweb&install-command=cd%20..%2F..%20%26%26%20npx%20--yes%20pnpm%4011.18.0%20install%20--frozen-lockfile&env=NEXT_PUBLIC_SITE_URL,NEXT_PUBLIC_SUPABASE_URL,NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,SUPABASE_SECRET_KEY,COMMUNITY_MODERATOR_TOKEN&envDescription=See%20the%20Configuration%20section%20of%20the%20README&project-name=community&repository-name=community)
+2. Vercel asks you to sign in and copy the repository into your own account.
+3. Fill in the five values it asks for:
+   - `NEXT_PUBLIC_SITE_URL`: your site address. If you do not know it yet, enter `https://example.com` now and correct it in Vercel settings after the first deploy.
+   - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, `SUPABASE_SECRET_KEY`: from Step 1.
+   - `COMMUNITY_MODERATOR_TOKEN`: invent a long random password (at least 30 characters). You will use it to approve posts.
+4. Click Deploy and wait for the build to finish.
+
+Then continue with [First setup](#first-setup-after-installing). Captcha is on by default, so add your Turnstile keys there before opening the site to visitors.
+
+### Route B: run it on your own computer (developers)
+
+Prerequisites:
+
+| Tool | Version | Needed for |
+| --- | --- | --- |
+| Node.js | 22.13 or newer | everything |
+| pnpm | 11.18.0 (`npx pnpm@11.18.0` works without installing it) | everything |
+| Git | any recent | cloning |
+| Supabase CLI | 2.x | local database only |
+| Docker Desktop | running | local database only |
+
+You can skip the Supabase CLI and Docker by using a free hosted Supabase project as in Route A, Step 1.
 
 ```bash
 git clone https://github.com/mywebmasteruk/byesar-community.git
 cd byesar-community
 npx pnpm@11.18.0 install
-# then create apps/web/.env.local with the variables listed under Configuration
+cp apps/web/.env.example apps/web/.env.local
 ```
 
-1. Apply the migrations in `apps/web/supabase/migrations/` to your Supabase database (with the Supabase CLI: `supabase db push`, or paste the files into the SQL editor in order).
-2. Optionally load the sample content: run `apps/web/supabase/demo-seed.sql` in the SQL editor. It creates two sample communities, `demo` and `demo-arabic`.
-3. Fill in `apps/web/.env.local` (see [Configuration](#configuration)).
-4. Start the app:
+Local database (needs Docker):
 
 ```bash
+cd apps/web
+supabase start          # prints the local API URL and keys
+supabase db reset       # applies the migrations in supabase/migrations
+```
+
+Put the URL and keys that `supabase start` printed into `apps/web/.env.local`. With a hosted project, run the migrations in the SQL Editor as in Route A and use its URL and keys instead.
+
+Load the sample communities (optional): run `apps/web/supabase/demo-seed.sql` in the SQL Editor (hosted) or with `psql` against the local database.
+
+Start the app and open it:
+
+```bash
+cd ../..
 npx pnpm@11.18.0 --filter web dev
 ```
 
-Open http://localhost:3000/c/demo.
+Open http://localhost:3000/c/demo (it exists only if you loaded the sample communities, otherwise follow First setup below).
 
-Checks to run before sending changes:
+Run the checks:
 
 ```bash
 npx pnpm@11.18.0 --filter web typecheck
 cd apps/web && node --test --experimental-strip-types lib/community/*.test.mjs lib/moderation/*.test.mjs
 ```
+
+### First setup after installing
+
+1. **Create your first community.** In the Supabase SQL Editor run, changing the values:
+
+   ```sql
+   insert into communities (slug, name_en, name_ar, default_locale)
+   values ('my-community', 'My community', 'مجتمعي', 'en');
+   ```
+
+   The community is then at `/c/my-community`. (An admin page for this is planned.)
+2. **Set the moderator token.** It is the value of `COMMUNITY_MODERATOR_TOKEN`. Changing it in Vercel needs a redeploy; locally restart the dev server.
+3. **Open `/moderation`.** Enter the token. You see the posts waiting for approval and can approve or reject each one.
+4. **Turn the captcha on.** In the Cloudflare dashboard open Turnstile, add a widget for your domain, and copy the site key and the secret key. Set `NEXT_PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY` and `CAPTCHA_REQUIRED=true`, then redeploy. Without a valid captcha, posting is refused.
+5. **Try it.** Post a question on your community page. It should say it is waiting for approval; approve it in `/moderation` and it appears.
+
+### Updating
+
+- Vercel route: in your copy of the repository on GitHub use Sync fork, then Vercel redeploys by itself. Run any new files from `apps/web/supabase/migrations/` that you have not run yet (oldest first) before or right after.
+- Local: `git pull`, then `npx pnpm@11.18.0 install`, then `supabase db reset` (local database, erases local data) or run only the new migration files.
+
+### Troubleshooting
+
+| Problem | Cause and fix |
+| --- | --- |
+| Build fails on Vercel with a missing module or lockfile error | The install command was dropped. In Vercel project settings set Root Directory to `apps/web` and Install Command to `cd ../.. && npx --yes pnpm@11.18.0 install --frozen-lockfile` |
+| The page shows an error about Supabase, or `/c/<slug>` is empty | A Supabase value is wrong or missing. Re-copy the URL and keys from Project settings, API, then redeploy |
+| `/c/<slug>` returns 404 | No community with that slug exists. Run the insert in First setup and check the spelling |
+| Posting says "captcha" or returns 403 | Captcha is on but the Turnstile keys are missing or belong to another domain. Add the right keys, or for local testing set `CAPTCHA_REQUIRED=false` |
+| Posting returns 429 | Rate limit reached (5 per hour per address). Wait, then try again |
+| `/moderation` says "Wrong token." | The token does not match `COMMUNITY_MODERATOR_TOKEN`. Check for extra spaces, and redeploy after changing it |
+| `supabase start` fails | Docker Desktop is not running, or a port is in use. Start Docker, or use a hosted Supabase project |
 
 ## Configuration
 
