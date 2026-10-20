@@ -13,10 +13,6 @@ import { routing } from '@kit/i18n/routing';
 const namespaces = [
   'common',
   'auth',
-  'account',
-  'teams',
-  'billing',
-  'marketing',
 ] as const;
 
 const isDevelopment = process.env.NODE_ENV === 'development';
