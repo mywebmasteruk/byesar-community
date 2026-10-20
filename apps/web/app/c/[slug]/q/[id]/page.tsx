@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
+import { PostForm } from '~/components/community/post-form';
 import { createClient } from '~/lib/community/public-client';
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
 
@@ -55,6 +56,7 @@ async function QuestionContent({
       ) : (
         <p className="mt-2">{t.none}</p>
       )}
+      <PostForm kind="answer" slug={slug} locale={locale} questionId={id} />
     </main>
   );
 }

@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
+import { PostForm } from '~/components/community/post-form';
 import { createClient } from '~/lib/community/public-client';
 
 
@@ -56,6 +57,8 @@ async function CommunityContent({
       ) : (
         <p className="mt-6">{t.empty}</p>
       )}
+      <h2 className="mt-8 text-lg font-medium">{t.ask}</h2>
+      <PostForm kind="question" slug={slug} locale={locale} />
     </main>
   );
 }
