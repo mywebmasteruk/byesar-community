@@ -19,6 +19,22 @@ const getUser = (request: NextRequest, response: NextResponse) => {
   return supabase.auth.getClaims();
 };
 
+// Unknown communities must return a real 404 status; the page streams, so it cannot.
+async function communityExists(slug: string) {
+  const base = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const key = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  if (!base || !key) return true;
+  try {
+    const res = await fetch(`${base}/rest/v1/communities?slug=eq.${encodeURIComponent(slug)}&select=id`, {
+      headers: { apikey: key },
+    });
+    if (!res.ok) return true;
+    return ((await res.json()) as unknown[]).length > 0;
+  } catch {
+    return true;
+  }
+}
+
 export async function proxy(request: NextRequest) {
   // a product subdomain (e.g. demo.<root domain>) is served by /c/<slug>
   const slug = communitySlugFromHost(
@@ -28,8 +44,14 @@ export async function proxy(request: NextRequest) {
 
   if (slug && !request.nextUrl.pathname.startsWith('/c/')) {
     const url = request.nextUrl.clone();
+    if (!(await communityExists(slug))) return new NextResponse('Not found', { status: 404 });
     url.pathname = `/c/${slug}${url.pathname === '/' ? '' : url.pathname}`;
     return NextResponse.rewrite(url);
+  }
+
+  const direct = /^\/c\/([a-z0-9-]+)(\/|$)/.exec(request.nextUrl.pathname);
+  if (direct && !(await communityExists(direct[1]!))) {
+    return new NextResponse('Not found', { status: 404 });
   }
 
   const response = NextResponse.next();
