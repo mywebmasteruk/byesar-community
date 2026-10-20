@@ -36,11 +36,8 @@ async function getPaths() {
 
   const paths = [
     '/',
-    '/faq',
-    '/cookie-policy',
-    '/terms-of-service',
-    '/privacy-policy',
-    // add more paths here
+    '/c/demo',
+    '/c/demo-arabic',
   ];
 
   return paths.map((path) => {
