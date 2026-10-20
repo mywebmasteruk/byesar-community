@@ -54,7 +54,7 @@ Voting exists as a server route for signed-in users, but there is no sign-in or 
 
 ## Quick start
 
-You need Node.js 20 or newer, a Supabase project (or the Supabase CLI for a local one), and optionally a Cloudflare Turnstile widget.
+You need Node.js 22.13 or newer, a Supabase project (or the Supabase CLI for a local one), and optionally a Cloudflare Turnstile widget.
 
 ```bash
 git clone https://github.com/mywebmasteruk/byesar-community.git
