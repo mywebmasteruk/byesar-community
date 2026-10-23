@@ -1,0 +1,166 @@
+TAP version 13
+# Subtest: 6th post in the window is limited, other IPs are not
+ok 1 - 6th post in the window is limited, other IPs are not
+  ---
+  duration_ms: 0.625738
+  type: 'test'
+  ...
+# Subtest: window expires
+ok 2 - window expires
+  ---
+  duration_ms: 0.092004
+  type: 'test'
+  ...
+# Subtest: turnstile fails closed with no secret or no token
+ok 3 - turnstile fails closed with no secret or no token
+  ---
+  duration_ms: 0.168078
+  type: 'test'
+  ...
+# Subtest: gate: empty, malformed and tokenless bodies get 403 before any validation
+ok 4 - gate: empty, malformed and tokenless bodies get 403 before any validation
+  ---
+  duration_ms: 17.43252
+  type: 'test'
+  ...
+# Subtest: gate: rate limit runs before the captcha check
+ok 5 - gate: rate limit runs before the captcha check
+  ---
+  duration_ms: 1.556562
+  type: 'test'
+  ...
+# Subtest: captcha off: no token needed, strict 5/hour per IP, default stays required
+ok 6 - captcha off: no token needed, strict 5/hour per IP, default stays required
+  ---
+  duration_ms: 0.676443
+  type: 'test'
+  ...
+# Subtest: excerpt keeps short text and closes a long one on a word
+ok 7 - excerpt keeps short text and closes a long one on a word
+  ---
+  duration_ms: 0.728868
+  type: 'test'
+  ...
+# Subtest: status labels stay plain in both languages
+ok 8 - status labels stay plain in both languages
+  ---
+  duration_ms: 0.123866
+  type: 'test'
+  ...
+# Subtest: answer counts use a simple plural
+ok 9 - answer counts use a simple plural
+  ---
+  duration_ms: 0.103778
+  type: 'test'
+  ...
+# Subtest: known demos have a short description, others a fallback
+ok 10 - known demos have a short description, others a fallback
+  ---
+  duration_ms: 0.199676
+  type: 'test'
+  ...
+# Subtest: initial is the first character, time is stable in UTC
+ok 11 - initial is the first character, time is stable in UTC
+  ---
+  duration_ms: 11.442278
+  type: 'test'
+  ...
+# Subtest: public copy has no emoji and names the approval wait
+ok 12 - public copy has no emoji and names the approval wait
+  ---
+  duration_ms: 0.204289
+  type: 'test'
+  ...
+# Subtest: light and dark brand tokens meet WCAG AA for text
+ok 13 - light and dark brand tokens meet WCAG AA for text
+  ---
+  duration_ms: 0.632885
+  type: 'test'
+  ...
+# Subtest: subdomain becomes slug
+ok 14 - subdomain becomes slug
+  ---
+  duration_ms: 0.685345
+  type: 'test'
+  ...
+# Subtest: port ignored, case ignored
+ok 15 - port ignored, case ignored
+  ---
+  duration_ms: 0.14882
+  type: 'test'
+  ...
+# Subtest: root, www, other domains give null
+ok 16 - root, www, other domains give null
+  ---
+  duration_ms: 0.09141
+  type: 'test'
+  ...
+# Subtest: nested subdomain and bad slug give null
+ok 17 - nested subdomain and bad slug give null
+  ---
+  duration_ms: 0.079513
+  type: 'test'
+  ...
+# Subtest: slug validity
+ok 18 - slug validity
+  ---
+  duration_ms: 0.120972
+  type: 'test'
+  ...
+# Subtest: direction and locale
+ok 19 - direction and locale
+  ---
+  duration_ms: 0.120095
+  type: 'test'
+  ...
+# Subtest: empty refused
+ok 20 - empty refused
+  ---
+  duration_ms: 1.014379
+  type: 'test'
+  ...
+# Subtest: too long refused
+ok 21 - too long refused
+  ---
+  duration_ms: 0.139794
+  type: 'test'
+  ...
+# Subtest: blocked term refused, case-insensitive
+ok 22 - blocked term refused, case-insensitive
+  ---
+  duration_ms: 0.1654
+  type: 'test'
+  ...
+# Subtest: pre-moderation holds
+ok 23 - pre-moderation holds
+  ---
+  duration_ms: 0.142625
+  type: 'test'
+  ...
+# Subtest: open community publishes
+ok 24 - open community publishes
+  ---
+  duration_ms: 0.146806
+  type: 'test'
+  ...
+# Subtest: religious flag forces pending
+ok 25 - religious flag forces pending
+  ---
+  duration_ms: 0.107712
+  type: 'test'
+  ...
+# Subtest: more than 2 links is refused; forceHold holds even without pre-moderation
+ok 26 - more than 2 links is refused; forceHold holds even without pre-moderation
+  ---
+  duration_ms: 0.144689
+  type: 'test'
+  ...
+1..26
+# tests 26
+# suites 0
+# pass 26
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 141.765413

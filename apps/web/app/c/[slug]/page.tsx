@@ -1,16 +1,21 @@
 import { Suspense } from 'react';
-import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
+import { CommunityHeader } from '~/components/community/community-header';
+import { EmptyNote } from '~/components/community/empty-note';
 import { PostForm } from '~/components/community/post-form';
+import { QuestionCard } from '~/components/community/question-card';
 import { createClient } from '~/lib/community/public-client';
+import { communityBlurb, communityName, pageCopy } from '~/lib/community/public-copy';
+import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
 
-
-const text = {
-  en: { empty: 'No questions yet.', disclaimer: 'Community opinion, not a fatwa or advice.', ask: 'Ask a question' },
-  ar: { empty: 'لا توجد أسئلة بعد.', disclaimer: 'رأي المجتمع، وليس فتوى أو نصيحة.', ask: 'اطرح سؤالاً' },
-} as const;
+type QuestionRow = {
+  id: string;
+  title: string;
+  body: string;
+  created_at: string;
+  status: string;
+};
 
 async function CommunityContent({
   params,
@@ -31,41 +36,77 @@ async function CommunityContent({
   if (!community) notFound();
 
   const locale = pickLocale((await searchParams).lang, pickLocale(community.default_locale));
-  const t = text[locale];
-  const name = locale === 'ar' && community.name_ar ? community.name_ar : community.name_en;
+  const t = pageCopy[locale];
+  const name = communityName(community, locale);
 
-  // RLS only returns published rows
+  // RLS only returns published rows.
   const { data: questions } = await supabase
     .from('questions')
-    .select('id,title,created_at')
+    .select('id,title,body,created_at,status')
     .eq('community_id', community.id)
     .order('created_at', { ascending: false })
     .limit(50);
+  const rows = (questions ?? []) as QuestionRow[];
+  const counts = new Map<string, number>();
+  if (rows.length > 0) {
+    const { data: answers } = await supabase
+      .from('answers')
+      .select('question_id')
+      .in(
+        'question_id',
+        rows.map((row) => row.id),
+      );
+    for (const answer of (answers ?? []) as { question_id: string }[]) {
+      counts.set(answer.question_id, (counts.get(answer.question_id) ?? 0) + 1);
+    }
+  }
 
   return (
-    <main lang={locale} dir={dirFor(locale)} className="mx-auto max-w-2xl p-6">
-      <h1 className="text-2xl font-semibold">{name}</h1>
-      <p className="text-muted-foreground mt-1 text-sm">{t.disclaimer}</p>
-      {questions?.length ? (
-        <ul className="mt-6 space-y-3">
-          {questions.map((q) => (
-            <li key={q.id} className="rounded border p-3">
-              <Link href={`/c/${slug}/q/${q.id}?lang=${locale}`}>{q.title}</Link>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="mt-6">{t.empty}</p>
-      )}
-      <h2 className="mt-8 text-lg font-medium">{t.ask}</h2>
-      <PostForm kind="question" slug={slug} locale={locale} />
+    <main lang={locale} dir={dirFor(locale)} className="public-shell mx-auto w-full max-w-2xl px-4 py-6 sm:px-6">
+      <CommunityHeader
+        name={name}
+        description={communityBlurb(slug, locale)}
+        path={`/c/${slug}`}
+        locale={locale}
+      />
+      <section aria-labelledby="questions-heading" className="mt-8">
+        <h2 id="questions-heading" className="text-lg font-semibold">
+          {t.questions}
+        </h2>
+        {rows.length ? (
+          <ul className="mt-4 space-y-3">
+            {rows.map((question) => (
+              <QuestionCard
+                key={question.id}
+                href={`/c/${slug}/q/${question.id}?lang=${locale}`}
+                title={question.title}
+                body={question.body}
+                createdAt={question.created_at}
+                status={question.status}
+                answerCount={counts.get(question.id) ?? 0}
+                locale={locale}
+              />
+            ))}
+          </ul>
+        ) : (
+          <div className="mt-4">
+            <EmptyNote title={t.emptyTitle} body={t.emptyBody} testId="empty-questions" />
+          </div>
+        )}
+      </section>
+      <section aria-labelledby="ask-heading" className="mt-10">
+        <h2 id="ask-heading" className="text-lg font-semibold">
+          {t.ask}
+        </h2>
+        <PostForm kind="question" slug={slug} locale={locale} />
+      </section>
     </main>
   );
 }
 
 export default function CommunityPage(props: Parameters<typeof CommunityContent>[0]) {
   return (
-    <Suspense fallback={null}>
+    <Suspense fallback={<main className="text-muted-foreground mx-auto max-w-2xl px-4 py-6 text-sm">Loading.</main>}>
       <CommunityContent {...props} />
     </Suspense>
   );
