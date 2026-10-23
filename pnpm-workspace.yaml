@@ -8,7 +8,7 @@ catalog:
   '@makerkit/data-loader-supabase-nextjs': ^1.2.5
   '@manypkg/cli': ^0.25.1
   '@marsidev/react-turnstile': ^1.6.2
-  '@next/bundle-analyzer': 16.4.0
+  '@next/bundle-analyzer': 16.4.1
   '@playwright/test': ^1.64.1
   '@base-ui/react': 1.9.0
   '@supabase/ssr': ^0.12.7
@@ -33,7 +33,7 @@ catalog:
   input-otp: 1.5.0
   lucide-react: ^1.57.0
   nanoid: ^6.0.2
-  next: 16.4.0
+  next: 16.4.1
   next-intl: ^4.14.9
   next-safe-action: 8.7.3
   next-sitemap: ^4.2.3
@@ -70,3 +70,6 @@ allowBuilds:
   '@swc/core': true
   'esbuild': true
   'sharp': true
+
+overrides:
+  fast-uri: '>=3.1.8'
