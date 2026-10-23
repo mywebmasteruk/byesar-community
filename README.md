@@ -199,6 +199,10 @@ The app deploys to Vercel with Supabase as the database.
 
 Issues and pull requests are welcome. Please work on a branch, keep the write gate (rate limit, captcha, validation, moderation) first on every new write route with a test proving it, run the typecheck and tests above, add any new dependency to `THIRD-PARTY-NOTICES.md` (open licences only), and avoid secrets in commits.
 
+## Project policies
+
+[Contributing guide](CONTRIBUTING.md) | [Security policy](SECURITY.md) | [Code of Conduct](CODE_OF_CONDUCT.md)
+
 ## Licence
 
 MIT. See [LICENSE](LICENSE). This project is built on the MIT-licensed Makerkit Lite starter; see [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md) and [README.upstream.md](README.upstream.md).
