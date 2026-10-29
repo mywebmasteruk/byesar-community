@@ -1,9 +1,7 @@
 name: Workflow
+# Owner rule: no automatic GitHub Actions runs (manual only). See byesar-vp VP-REMIT.
 on:
-  push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 jobs:
   typescript:
     name: ʦ TypeScript
