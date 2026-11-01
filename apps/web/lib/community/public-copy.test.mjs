@@ -88,3 +88,8 @@ test('light and dark brand tokens meet WCAG AA for text', () => {
     assert.ok(contrast(block.ink, block['pine-soft']) >= 4.5);
   }
 });
+import { headerCopy as __hc } from './public-copy.ts';
+test('header copy has the same keys in both locales', () => {
+  assert.deepEqual(Object.keys(__hc.en), Object.keys(__hc.ar));
+  assert.match(__hc.ar.moderation, /[؀-ۿ]/);
+});

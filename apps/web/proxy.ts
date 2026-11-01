@@ -4,7 +4,12 @@ import { NextResponse, URLPattern } from 'next/server';
 import { createMiddlewareClient } from '@kit/supabase/middleware-client';
 
 import pathsConfig from '~/config/paths.config';
-import { communitySlugFromHost } from '~/lib/community/resolve';
+import {
+  SITE_LANG_COOKIE,
+  SITE_LANG_HEADER,
+  communitySlugFromHost,
+  siteLocaleFrom,
+} from '~/lib/community/resolve';
 
 const NEXT_ACTION_HEADER = 'next-action';
 
@@ -53,7 +58,20 @@ export async function proxy(request: NextRequest) {
     return new NextResponse('Not found', { status: 404 });
   }
 
-  const response = NextResponse.next();
+  const queryLang = request.nextUrl.searchParams.get('lang');
+  const siteLang = siteLocaleFrom(queryLang, request.cookies.get(SITE_LANG_COOKIE)?.value);
+  const forwarded = new Headers(request.headers);
+  forwarded.delete(SITE_LANG_HEADER);
+  if (siteLang) forwarded.set(SITE_LANG_HEADER, siteLang);
+
+  const response = NextResponse.next({ request: { headers: forwarded } });
+  if (siteLang && siteLang === queryLang) {
+    response.cookies.set(SITE_LANG_COOKIE, siteLang, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: 'lax',
+    });
+  }
 
   // set a unique request ID for each request
   // this helps us log and trace requests

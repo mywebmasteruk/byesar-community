@@ -16,6 +16,7 @@ import {
   pageCopy,
   statusLabel,
 } from '~/lib/community/public-copy';
+import { getSiteLocale } from '~/lib/community/site-locale';
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
 
 const UUID = /^[0-9a-f-]{36}$/i;
@@ -51,7 +52,7 @@ async function QuestionContent({
   if (!question) notFound();
   const row = question as QuestionRow;
 
-  const locale = pickLocale((await searchParams).lang, pickLocale(row.locale));
+  const locale = pickLocale((await searchParams).lang, (await getSiteLocale()) ?? pickLocale(row.locale));
   const t = pageCopy[locale];
   const f = formCopy[locale];
   const { data: community } = await supabase
@@ -84,7 +85,6 @@ async function QuestionContent({
         <CommunityHeader
           name={communityName(community, locale)}
           description={communityBlurb(slug, locale)}
-          path={`/c/${slug}/q/${id}`}
           locale={locale}
         />
       ) : null}

@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { communitySlugFromHost as f, isValidSlug, dirFor, pickLocale } from './resolve.ts';
+import { communitySlugFromHost as f, isValidSlug, dirFor, pickLocale, siteLocaleFrom } from './resolve.ts';
 
 test('subdomain becomes slug', () => assert.equal(f('demo.example.community', 'example.community'), 'demo'));
 test('port ignored, case ignored', () => assert.equal(f('Demo.example.community:3000', 'example.community'), 'demo'));
@@ -16,3 +16,10 @@ test('nested subdomain and bad slug give null', () => {
 });
 test('slug validity', () => { assert.ok(isValidSlug('my-community')); assert.ok(!isValidSlug('admin')); assert.ok(!isValidSlug('A b')); });
 test('direction and locale', () => { assert.equal(dirFor('ar'), 'rtl'); assert.equal(dirFor('en'), 'ltr'); assert.equal(pickLocale('fr'), 'en'); assert.equal(pickLocale('ar'), 'ar'); });
+test('site locale: query beats cookie, invalid gives null', () => {
+  assert.equal(siteLocaleFrom('ar', 'en'), 'ar');
+  assert.equal(siteLocaleFrom(null, 'ar'), 'ar');
+  assert.equal(siteLocaleFrom('fr', 'en'), 'en');
+  assert.equal(siteLocaleFrom('fr', 'xx'), null);
+  assert.equal(siteLocaleFrom(undefined, undefined), null);
+});

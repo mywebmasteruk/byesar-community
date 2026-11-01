@@ -112,6 +112,27 @@ export function formatWhen(locale: Locale, iso: string): string {
   }).format(date);
 }
 
+export const headerCopy = {
+  en: {
+    product: 'Byesar Community',
+    nav: 'Main',
+    demo: 'Demo',
+    arabicDemo: 'Arabic demo',
+    moderation: 'Moderation',
+    github: 'GitHub',
+    language: 'Language',
+  },
+  ar: {
+    product: 'مجتمع بيسار',
+    nav: 'التنقل الرئيسي',
+    demo: 'العرض التجريبي',
+    arabicDemo: 'العرض التجريبي العربي',
+    moderation: 'الإشراف',
+    github: 'جيت هب',
+    language: 'اللغة',
+  },
+} as const;
+
 export const pageCopy = {
   en: {
     product: 'Community',

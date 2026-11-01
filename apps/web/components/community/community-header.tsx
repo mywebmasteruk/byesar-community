@@ -9,12 +9,10 @@ const fieldClass =
 export function CommunityHeader({
   name,
   description,
-  path,
   locale,
 }: {
   name: string;
   description: string;
-  path: string;
   locale: Locale;
 }) {
   const t = pageCopy[locale];
@@ -39,28 +37,6 @@ export function CommunityHeader({
           <p className="text-muted-foreground mt-1 text-sm leading-relaxed">{description}</p>
         </div>
       </div>
-      <nav aria-label={t.language} className="mt-4 flex flex-wrap gap-4 text-sm">
-        <Link
-          href={`${path}?lang=en`}
-          hrefLang="en"
-          lang="en"
-          aria-current={locale === 'en' ? 'page' : undefined}
-          className={`${fieldClass} underline-offset-4 hover:underline ${locale === 'en' ? 'font-semibold' : 'text-primary'}`}
-          data-test="lang-en"
-        >
-          {t.english}
-        </Link>
-        <Link
-          href={`${path}?lang=ar`}
-          hrefLang="ar"
-          lang="ar"
-          aria-current={locale === 'ar' ? 'page' : undefined}
-          className={`${fieldClass} underline-offset-4 hover:underline ${locale === 'ar' ? 'font-semibold' : 'text-primary'}`}
-          data-test="lang-ar"
-        >
-          {t.arabic}
-        </Link>
-      </nav>
       <p className="text-muted-foreground mt-4 text-sm">{t.disclaimer}</p>
     </header>
   );

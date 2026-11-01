@@ -18,7 +18,7 @@ export const generateMetadata = async () => {
 
 const NotFoundPage = () => {
   return (
-    <div className={'flex h-screen flex-1 flex-col'}>
+    <div className={'flex min-h-[70vh] flex-1 flex-col'}>
 
       <div
         className={

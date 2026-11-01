@@ -4,7 +4,7 @@ const REPO_URL = 'https://github.com/mywebmasteruk/byesar-community';
 
 export default function HomePage() {
   return (
-    <main className={'mx-auto flex w-full max-w-2xl flex-1 flex-col justify-center gap-6 px-4 py-16'}>
+    <main className={'mx-auto flex w-full max-w-2xl flex-1 flex-col items-stretch justify-center gap-6 px-4 py-10 sm:px-6 sm:py-16'}>
       <h1 className={'text-3xl font-semibold tracking-tight'}>Byesar Community (demo)</h1>
       <p className={'text-lg'}>
         An open-source question and answer forum for communities, in English and Arabic.
