@@ -93,3 +93,18 @@ test('header copy has the same keys in both locales', () => {
   assert.deepEqual(Object.keys(__hc.en), Object.keys(__hc.ar));
   assert.match(__hc.ar.moderation, /[؀-ۿ]/);
 });
+
+test('home copy has the same shape in English and Arabic', async () => {
+  const { homeCopy } = await import('./public-copy.ts');
+  assert.deepEqual(Object.keys(homeCopy.en), Object.keys(homeCopy.ar));
+  assert.equal(homeCopy.en.features.length, homeCopy.ar.features.length);
+  assert.equal(homeCopy.en.steps.length, 3);
+  assert.equal(homeCopy.ar.steps.length, 3);
+  for (const locale of ['en', 'ar']) {
+    for (const value of Object.values(homeCopy[locale]).flat(2)) {
+      const text = typeof value === 'string' ? value : JSON.stringify(value);
+      assert.ok(text.trim().length > 0);
+      assert.doesNotMatch(text, /makerkit|saas|lorem|pricing/i);
+    }
+  }
+});
