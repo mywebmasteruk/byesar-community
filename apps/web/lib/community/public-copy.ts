@@ -235,3 +235,92 @@ export const formCopy = {
     thisAnswer: 'إجابة',
   },
 } as const;
+
+export const homeCopy = {
+  en: {
+    heroTitle: 'Questions and answers, read by a moderator first',
+    heroLine:
+      'An open-source forum for communities, in English and Arabic. Nothing is public until a moderator has approved it.',
+    viewDemo: 'View the demo',
+    install: 'Install',
+    featuresTitle: 'Features',
+    featuresIntro: 'Only what is built and working today.',
+    built: 'Built',
+    features: [
+      'Many community spaces on one engine, each at its own address',
+      'Questions and answers, with public reading of approved content',
+      'Posting without an account, protected by a captcha and rate limits',
+      'Moderation: every new post is held until a moderator approves or rejects it',
+      'Reports, with a moderator queue',
+      'A blocked-terms list and a limit of two links per post',
+      'English and Arabic, with full right-to-left layout',
+    ],
+    stepsTitle: 'Moderation in 3 steps',
+    steps: [
+      {
+        title: 'Someone posts',
+        body: 'A visitor sends a question or an answer. It passes the rate limit, the captcha and the text checks, and is saved as waiting.',
+      },
+      {
+        title: 'A moderator reads it',
+        body: 'The moderator opens the queue and reads each waiting post. Reports from visitors go to the same queue.',
+      },
+      {
+        title: 'Approve or reject',
+        body: 'Only approved posts become public. Rejected posts are never shown.',
+      },
+    ],
+    installTitle: 'Install',
+    installBody:
+      'You can put it online with a free database account and a free hosting account, without programming. Developers can also run it on their own computer. The steps are in the README.',
+    installLink: 'Read the install steps',
+    licenceTitle: 'Licence',
+    licenceLine: 'Free and open source under the MIT licence.',
+    licenceLink: 'Read the licence',
+    footerDemo: 'This is a demo. Its data may be reset at any time.',
+    footerSource: 'Source code on GitHub',
+  },
+  ar: {
+    heroTitle: 'أسئلة وإجابات يقرؤها المشرف أولاً',
+    heroLine:
+      'منتدى مفتوح المصدر للمجتمعات، بالإنجليزية والعربية. لا يظهر شيء للعامة حتى يوافق عليه المشرف.',
+    viewDemo: 'عرض النسخة التجريبية',
+    install: 'التثبيت',
+    featuresTitle: 'المزايا',
+    featuresIntro: 'فقط ما هو مبني ويعمل اليوم.',
+    built: 'جاهز',
+    features: [
+      'مجتمعات كثيرة على محرك واحد، لكل منها عنوانه',
+      'أسئلة وإجابات، مع قراءة عامة للمحتوى المعتمد',
+      'النشر دون حساب، مع حماية بالكابتشا وحدود للمعدل',
+      'الإشراف: كل منشور جديد ينتظر حتى يوافق عليه المشرف أو يرفضه',
+      'البلاغات، مع قائمة انتظار للمشرف',
+      'قائمة كلمات محظورة وحد أقصى لرابطين في المنشور',
+      'الإنجليزية والعربية، مع تخطيط كامل من اليمين إلى اليسار',
+    ],
+    stepsTitle: 'الإشراف في 3 خطوات',
+    steps: [
+      {
+        title: 'شخص ينشر',
+        body: 'يرسل الزائر سؤالاً أو إجابة. يمر بحد المعدل والكابتشا وفحص النص، ثم يُحفظ بانتظار المراجعة.',
+      },
+      {
+        title: 'المشرف يقرأ',
+        body: 'يفتح المشرف قائمة الانتظار ويقرأ كل منشور. وتصل بلاغات الزوار إلى القائمة نفسها.',
+      },
+      {
+        title: 'موافقة أو رفض',
+        body: 'المنشورات المعتمدة فقط تصبح عامة. والمرفوضة لا تظهر أبداً.',
+      },
+    ],
+    installTitle: 'التثبيت',
+    installBody:
+      'يمكنك تشغيله على الإنترنت بحساب قاعدة بيانات مجاني وحساب استضافة مجاني، دون برمجة. ويمكن للمطورين تشغيله على حاسوبهم. الخطوات في ملف README.',
+    installLink: 'اقرأ خطوات التثبيت',
+    licenceTitle: 'الرخصة',
+    licenceLine: 'مجاني ومفتوح المصدر بموجب رخصة MIT.',
+    licenceLink: 'اقرأ الرخصة',
+    footerDemo: 'هذه نسخة تجريبية. قد تُعاد تهيئة بياناتها في أي وقت.',
+    footerSource: 'الشيفرة المصدرية على جيت هب',
+  },
+} as const;
