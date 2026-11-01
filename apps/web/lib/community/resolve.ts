@@ -19,3 +19,17 @@ export type Locale = 'en' | 'ar';
 export const dirFor = (l: Locale): 'ltr' | 'rtl' => (l === 'ar' ? 'rtl' : 'ltr');
 export const pickLocale = (v: string | null | undefined, fallback: Locale = 'en'): Locale =>
   v === 'ar' || v === 'en' ? v : fallback;
+
+export const SITE_LANG_COOKIE = 'site-lang';
+export const SITE_LANG_HEADER = 'x-site-lang';
+
+// The visitor's chosen language: an explicit ?lang= wins, then the saved cookie.
+// Returns null when neither is a valid locale, so callers can fall back to their own default.
+export function siteLocaleFrom(
+  query: string | null | undefined,
+  cookie: string | null | undefined,
+): Locale | null {
+  if (query === 'ar' || query === 'en') return query;
+  if (cookie === 'ar' || cookie === 'en') return cookie;
+  return null;
+}

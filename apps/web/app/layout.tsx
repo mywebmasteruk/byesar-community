@@ -4,15 +4,21 @@ import { routing } from '@kit/i18n/routing';
 import { Toaster } from '@kit/ui/sonner';
 import { cn } from '@kit/ui/utils';
 
+import { SiteHeader } from '~/components/site-header';
 import { RootProviders } from '~/components/root-providers';
 import appConfig from '~/config/app.config';
 import { heading, sans } from '~/lib/fonts';
+import { dirFor } from '~/lib/community/resolve';
+import { getSiteLocale } from '~/lib/community/site-locale';
 import { generateRootMetadata } from '~/lib/root-metdata';
 
 import '../styles/globals.css';
 
 /**
- * The root layout awaits nothing request-bound on purpose. Reading the theme
+ * The site language (cookie / ?lang=) is read from a header set by proxy.ts, which
+ * makes every route dynamic; that is the cost of server-rendering dir="rtl".
+ *
+ * Previously: the root layout awaited nothing request-bound on purpose. Reading the theme
  * cookie, the locale cookie or the session here makes every route in the app
  * dynamic, because nothing below it can prerender until that resolves.
  *
@@ -30,16 +36,18 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const locale = routing.defaultLocale;
+  const siteLocale = (await getSiteLocale()) ?? 'en';
   const messages = await getMessages({ locale });
 
   return (
-    <html lang={locale} className={getClassName()} suppressHydrationWarning>
-      <body>
+    <html lang={siteLocale} dir={dirFor(siteLocale)} className={getClassName()} suppressHydrationWarning>
+      <body className="flex min-h-screen flex-col">
         <RootProviders
           theme={appConfig.theme}
           locale={locale}
           messages={messages}
         >
+          <SiteHeader locale={siteLocale} />
           {children}
 
           {/* inside the providers so it can follow next-themes reactively */}
@@ -64,3 +72,5 @@ function getClassName() {
 }
 
 export const generateMetadata = generateRootMetadata;
+
+export const instant = false;

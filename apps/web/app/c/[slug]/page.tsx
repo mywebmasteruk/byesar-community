@@ -7,6 +7,7 @@ import { PostForm } from '~/components/community/post-form';
 import { QuestionCard } from '~/components/community/question-card';
 import { createClient } from '~/lib/community/public-client';
 import { communityBlurb, communityName, pageCopy } from '~/lib/community/public-copy';
+import { getSiteLocale } from '~/lib/community/site-locale';
 import { dirFor, isValidSlug, pickLocale } from '~/lib/community/resolve';
 
 type QuestionRow = {
@@ -35,7 +36,7 @@ async function CommunityContent({
     .maybeSingle();
   if (!community) notFound();
 
-  const locale = pickLocale((await searchParams).lang, pickLocale(community.default_locale));
+  const locale = pickLocale((await searchParams).lang, (await getSiteLocale()) ?? pickLocale(community.default_locale));
   const t = pageCopy[locale];
   const name = communityName(community, locale);
 
@@ -66,7 +67,6 @@ async function CommunityContent({
       <CommunityHeader
         name={name}
         description={communityBlurb(slug, locale)}
-        path={`/c/${slug}`}
         locale={locale}
       />
       <section aria-labelledby="questions-heading" className="mt-8">
