@@ -29,6 +29,12 @@ test('gate: rate limit runs before the captcha check', async () => {
   assert.equal((await gate(post('{}', '8.8.8.8'), 'rl')).fail?.status, 429);
 });
 
+test('gate: no secret + no CAPTCHA_REQUIRED env → posting is refused 403 (fail closed)', async () => {
+  delete process.env.TURNSTILE_SECRET_KEY;
+  delete process.env.CAPTCHA_REQUIRED;
+  assert.equal((await gate(post('{"msg":"hi"}', '5.5.5.1'), 'nosecret')).fail?.status, 403);
+});
+
 test('captcha off: no token needed, strict 5/hour per IP, default stays required', async () => {
   delete process.env.CAPTCHA_REQUIRED;
   assert.equal((await gate(post('{}', '7.7.7.1'), 'dflt')).fail?.status, 403);
