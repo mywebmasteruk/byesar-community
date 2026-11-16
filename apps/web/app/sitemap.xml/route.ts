@@ -1,7 +1,5 @@
 import { cacheLife } from 'next/cache';
 
-import { getServerSideSitemap } from 'next-sitemap';
-
 import appConfig from '~/config/app.config';
 
 /**
@@ -20,13 +18,35 @@ export async function GET() {
     'Cache-Control': `public, max-age=${MAX_AGE}, s-maxage=${S_MAX_AGE}`,
   };
 
-  return getServerSideSitemap([...paths], headers);
+  return new Response(buildSitemap(paths), {
+    headers: { ...headers, 'Content-Type': 'application/xml' },
+  });
+}
+
+function escapeXml(value: string) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&apos;');
+}
+
+function buildSitemap(paths: Array<{ loc: string; lastmod: string }>) {
+  const urls = paths
+    .map(
+      ({ loc, lastmod }) =>
+        `<url><loc>${escapeXml(loc)}</loc><lastmod>${escapeXml(lastmod)}</lastmod></url>`,
+    )
+    .join('');
+
+  return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${urls}</urlset>`;
 }
 
 /**
  * Cached because `lastmod` reads the clock, and an unstable value drops the
  * whole route to per-request rendering. The cache wraps the paths rather than
- * the handler: `getServerSideSitemap` returns a Response, which is a class
+ * the handler: the handler returns a Response, which is a class
  * instance and cannot cross a `use cache` boundary.
  */
 async function getPaths() {
